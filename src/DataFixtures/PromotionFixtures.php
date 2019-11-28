@@ -21,11 +21,13 @@ class PromotionFixtures extends BaseFixture implements DependentFixtureInterface
                $promotion= new Promotion();
                $promotion->setDegree($degree);
                $promotion->setYear($year);
+               $promotion->setStartDate(\DateTime::createFromFormat('Y-m-d', "2000-09-09"));
+               $promotion->setEndDate(\DateTime::createFromFormat('Y-m-d', "2018-09-09"));
+               $promotion->setNotes('voici un exemple de note');
                $manager->persist($promotion);
                $this->addReference('Promotion_'.$i,$promotion);
                $i++;
             }
-
         }
     $manager->flush();
     }

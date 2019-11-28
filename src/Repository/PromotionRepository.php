@@ -26,6 +26,7 @@ class PromotionRepository extends ServiceEntityRepository
                     ->innerJoin('p.year','y')
                     ->addOrderBy('d.name','ASC')
                     ->addOrderBy('y.title','ASC')
+
         ;
         return $qd->getQuery()->getResult();
     }

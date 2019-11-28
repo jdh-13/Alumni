@@ -168,7 +168,7 @@ class User implements UserInterface
     /**
      * @return Collection|Promotion[]
      */
-    public function getpromotions(): Collection
+    public function getPromotions(): Collection
     {
         return $this->promotions;
     }
@@ -207,11 +207,9 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles()
+    public function getRoles(): ?array
     {
-        $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
-        return array_unique($roles);
+        return $this->roles;
     }
 
     public function getSalt()
