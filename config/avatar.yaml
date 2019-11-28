@@ -1,0 +1,2 @@
+parameters:
+  avatar.template: '%kernel.project_dir%/templates/avatar.svg.tpl'

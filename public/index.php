@@ -1,6 +1,7 @@
 <?php
 
 use App\Kernel;
+//use App\Service\Avatar\SvgAvatarFactory;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 

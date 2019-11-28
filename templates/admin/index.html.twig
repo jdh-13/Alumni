@@ -1,0 +1,144 @@
+{% extends 'admin/base.html.twig' %}
+{% block body %}
+    <nav>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="formation-tab" data-toggle="tab" href="#formation" role="tab" aria-controls="formation" aria-selected="true">Formation</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-item nav-link" id="nav-années-tab" data-toggle="tab" href="#annees" role="tab" aria-controls="nav-années" aria-selected="false">Années</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link" id="nav-promotions-tab" data-toggle="tab" href="#promotions" role="tab" aria-controls="nav-promotions" aria-selected="false">Promotions</a>
+            </li>
+        </ul>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
+    </nav>
+
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="formation" role="tabpanel" aria-labelledby="formation-tab">
+            <a href="{{ path('admin.degree.new') }}" class="btn btn-primary mb-3 mt-3"><i class="far fa-plus-square"></i> Nouvelle Formation </a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"> Nom de la formation</th>
+                       <th scope="col"> Modifier</th>
+                        <th scope="col"> Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for degree in degrees %}
+                        <tr id="degree- {{ degree.id }}">
+                            <td>{{ degree.name }}</td>
+                            <td><a href="{{ path('admin.degree.edit',{"id":degree.id})}}"><i class="far fa-edit"></i></a></td>
+                            <td><a class="delete-button"  onclick="return modalSupp()" href="{{ path('admin.degree.delete',{"id":degree.id})}}"><i class="far fa-trash-alt"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+
+        <div class="tab-pane fade" id="annees" role="tabpanel" aria-labelledby="annees-tab">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-annees" role="tabpanel" aria-labelledby="nav-annees-tab">
+                    <a href="{{ path('admin.year.new') }}" type="button" class="btn btn-primary mb-3 mt-3"> <i class="far fa-plus-square"></i> Nouvelle Années </a>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col"> Années</th>
+                            <th scope="col"> Modifier</th>
+                            <th scope="col"> Supprimer</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for year in years %}
+                            <tr id="year-{{ year.id }}">
+                                <td>{{ year.title }}</td>
+                                <td><a href="{{ path('admin.year.edit',{"id":year.id})}}"><i class="far fa-edit"></i></a></td>
+                                <td><a class="delete-button"  onclick="return modalSupp()" href="{{ path('admin.year.delete',{"id":year.id})}}"><i class="far fa-trash-alt"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="tab-pane fade" id="promotions" role="tabpanel" aria-labelledby="promotions-tab">   <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <a href="{{ path('admin.promotion.new') }}" type="button" class="btn btn-primary mb-3 mt-3"> <i class="far fa-plus-square"></i> Nouvelle Promotions </a>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col"> Promotion</th>
+                            <th scope="col"> Modifier</th>
+                            <th scope="col"> Supprimer</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for promotion in promos %}
+                            <tr id="promotion-{{ promotion.id }}">
+                                <td>{{ promotion.degree.name }} - {{ promotion.year.title }} </td>
+                                <td><a href="{{ path('admin.promotion.edit',{"id": promotion.id}) }}"><i class="far fa-edit"></i> </a> </td>
+                                <td><a  class="delete-button" onclick="return modalSupp()" href="{{ path('admin.promotion.delete',{"id" : promotion.id}) }}"><i class="far fa-trash-alt"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script>
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        for(const button of deleteButtons)
+        {
+            button.addEventListener('click',(e)=>{
+                console.log('teste');
+                e.preventDefault();
+                const reponse = window.confirm('etes-vous certain de vouloir supprimer ?');
+                if(reponse)
+                {
+                    const url =e.currentTarget.href;
+                    $.post(url,(id) =>
+                    {
+                        const trElement = document.getElementById(id);
+                        trElement.parentNode.removeChild(trElement);
+                    });
+                }
+            });
+        }
+        // const hash = window.location.hash;
+        //
+        // if (hash)
+        // {
+        //     $(`.nav-tabs a[href="${hash}"]`).tab('show');
+        // }
+        //
+        // function modalSupp()
+        // {
+        //     return confirm("etes vous sur de vouloir supprimer ? ");
+        // }
+    </script>
+{% endblock %}

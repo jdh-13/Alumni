@@ -1,0 +1,131 @@
+{% extends'base.html.twig' %}
+{% block body%}
+<header>
+    <div id="containNav">
+        <figure>
+            <img id="logoGreta" src="{{ asset('img/gretalogo.png') }}" alt="logo" />
+            <!-- <figcaption>Logo Greta</figcaption> -->
+        </figure>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              Vous etes connecté en tant que {{ app.user.firstname }} {{ app.user.lastname }} <img src="{{ asset_avatar(app.user.avatar) }}" width="30" height="30" class="d-inline-block align-top" alt=""> avec le roles de {{app.user.roles|join(', ') }}
+
+            <div id="deconnect">
+                <p class="connect"><a href="{{ path('security.logout') }}">Déconnexion</a></p>
+            </div>
+
+        {% else %}
+
+            {% for message in app.flashes('authentication_error') %}
+                <div class="alert alert-error">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <div id="containForm">
+                <form action="{{ path('security.login') }}" method="post">
+                    <label for="inputEmail" class="sr-only">Email</label>
+                    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                    <label for="inputPassword" class="sr-only">mots de passe </label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Mots de passe " required>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <button class="btn btn-lg btn-primary" type="submit">connexion </button>
+                </form>
+            </div>
+        {% endif %}
+
+{#            <nav >#}
+{#                <ul id="menu">#}
+{#                    <li><a href="">Menu1</a></li>#}
+{#                    <li><a href="">Menu2</a></li>#}
+{#                    <li><a href="">Menu3</a></li>#}
+{#                    <li><a href="">Menu4</a></li>#}
+
+{#                    {% if is_granted('ROLE_ADMIN') %}#}
+{#                    <li>#}
+{#                        <a href="{{ path('admin.index') }}">Admin</a>#}
+{#                    </li>#}
+{#                    {% endif %}#}
+{#                </ul>#}
+{#            </nav>#}{#  #}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+            {% if is_granted('ROLE_ADMIN') %}
+            <a class="navbar-brand" href="{{ path('admin.index') }}">Admin</a>
+            {% endif %}
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Menu 1 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Menu 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Menu 3</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Menu 4</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <figure id="bann">
+        <img id="imgbann" src="{{asset('img/formationsm.jpg')}}" alt="img1" />
+        <!-- <figcaption>Formations Greta</figcaption> -->
+    </figure>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+    <div>
+        <form method="post" action="{{ path('home.index') }}">
+            <label for="format">Choisir formation</label>
+            <select id="format" name="degree">
+                <option value="">Choisir formation</option>
+                {% for degreeRepo in degrees %}
+                    <option value="{{ degreeRepo.id }}">{{ degreeRepo.name }}</option>
+                {% endfor %}
+            </select>
+        <label for="annee">Choisir annee</label>
+        <select id="annee" name="year">
+            <option value="">Choisir annee</option>
+            {% for yearRepo in years %}
+                <option value="{{ yearRepo.id }}">{{ yearRepo.title }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="ok">
+        </form>
+    </div>
+    <section id="search-results">
+
+        {% if result is defined %}
+            <table class="avatar_table">
+                <thead class="colonne">
+                <tr class="tr_menu">
+    {#                <th scope="col"></th>#}
+                    <th scope="col">nom </th>
+                    <th scope="col">prenom</th>
+                    <th scope="col">avatar</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in result %}
+                        <tr class="tr_result">
+                            <th scope="row" class="user">user</th>
+                                <td>{{ user.lastname }} </td>
+                                <td> {{ user.firstname }} </td>
+                                <td> <img src="{{'upload/avatar/'~user.avatar }}" class="avatar">
+                                <a href="{{ path('alumni.index',{"id":user.id,"slug":user.slug})}}"> Plus D'infos </a> </td>
+                        </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </section>
+    {% endif %}
+</header>
+{% endblock %}
