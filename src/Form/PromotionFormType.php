@@ -5,18 +5,21 @@ namespace App\Form;
 use App\Entity\Degree;
 use App\Entity\Promotion;
 use App\Entity\Year;
-use Doctrine\DBAL\Types\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use function Sodium\add;
+
+
 
 class PromotionFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        //requirer false
         $builder ->add('degree',EntityType::class,
                         [
                         'label' => 'Formation Associées',
@@ -31,21 +34,20 @@ class PromotionFormType extends AbstractType
                     'choice_label' =>'title'
                     ])
 
-                ->add('startDate',TextType::class,
+                ->add('startDate',DateType::class,
                     [
                         'label' => 'Années de debut',
-                        'choice_label' =>'star_date'
+                        'required' =>false // pour mettre le champs vide
                     ])
-                ->add('endDate',TextType::class,
+                ->add('endDate',DateType::class,
                 [
-                    'label' => 'Années de fin ',
-                    'choice_label' =>'end_date'
+                    'label' => 'Années de fin '
+
                 ])
 
-                ->add('notes',TextType::class,
+                ->add('notes',TextareaType::class,
                 [
-                    'label' => 'notes',
-                    'choice_label' =>'notes'
+                    'label' => 'notes'
                 ]);
 
 
