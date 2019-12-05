@@ -13,17 +13,20 @@ class DegreeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name',TextType::class,
-                ['label'=>'Nom de la formation',
-                    'attr' => ['class' => 'name_field'],
-                    'empty_data'=> '',
-                    'constraints'=> [
-                        new NotBlank([
-                            'message' => ' Le nom de la formation ne peut pas être vide'
-                            ])
-                    ]
-                ]);
+        $builder->add('name',TextType::class,
+                    ['label'=>'Nom de la formation',
+                        'attr' => ['class' => 'name_field'],
+                        'empty_data'=> '',
+                        'constraints'=> [
+                            new NotBlank([
+                                'message' => ' Le nom de la formation ne peut pas être vide'
+                                ])
+                        ]
+                    ])
+                ->add('repository',TextType::class,
+                    [
+                        'label' => 'repository'
+                    ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

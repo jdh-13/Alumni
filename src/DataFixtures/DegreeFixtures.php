@@ -17,6 +17,7 @@ class DegreeFixtures extends Fixture
             $degree= new Degree();
             $this->addReference('Degree_'.$i,$degree);
             $degree->setName($value);
+            $degree->setRepository("https://www.google.com");
             $manager->persist($degree);
         }
         $manager->flush();

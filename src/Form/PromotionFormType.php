@@ -41,7 +41,7 @@ class PromotionFormType extends AbstractType
                     ])
                 ->add('endDate',DateType::class,
                 [
-                    'label' => 'Années de fin '
+                    'label' => 'Années de fin'
 
                 ])
 

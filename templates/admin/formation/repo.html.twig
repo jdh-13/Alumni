@@ -1,0 +1,18 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h2> Repository </h2>
+
+                <p> voici la formation {{degree.name}} avec le lien <a href="{{degree.repository}}">{{degree.repository}}</a> </p>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+

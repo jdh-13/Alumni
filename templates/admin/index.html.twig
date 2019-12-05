@@ -28,8 +28,10 @@
                 <thead>
                     <tr>
                         <th scope="col"> Nom de la formation</th>
+                        <th scope="col">Repository</th>
                        <th scope="col"> Modifier</th>
                         <th scope="col"> Supprimer</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +39,8 @@
                     {% for degree in degrees %}
                         <tr id="degree- {{ degree.id }}">
                             <td>{{ degree.name }}</td>
-                            <td><a href="{{ path('admin.degree.edit',{"id":degree.id})}}"><i class="far fa-edit"></i></a></td>
+                            <td><a href= "{{ path('admin.formation.repo',{"id":degree.id})}}">{{degree.repository}}</a></td>
+                            <td><a href= "{{ path('admin.degree.edit',{"id":degree.id})}}"><i class="far fa-edit"></i></a></td>
                             <td><a class="delete-button"  onclick="return modalSupp()" href="{{ path('admin.degree.delete',{"id":degree.id})}}"><i class="far fa-trash-alt"></i></a></td>
                         </tr>
                     {% endfor %}

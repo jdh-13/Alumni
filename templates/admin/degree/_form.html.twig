@@ -1,7 +1,15 @@
 
 {{ form_start(form) }}
+<ul>
+    <li>
+        {{ form_row(form.name) }}
+    </li>
 
-    {{ form_row(form.name) }}
-    <input type="submit" value="Enregistrer">
+    <li>
+        {{ form_row(form.repository) }}
+    </li>
+</ul>
+
+<input type="submit" value="Enregistrer">
 
 {{ form_end(form) }}

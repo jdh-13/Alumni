@@ -36,7 +36,7 @@ class AdminDegreeController extends AbstractController
      */
     public function edit(Degree $degree, Request $request)
     {
-        $form = $this->createForm(DegreeFormType::class,$degree);
+        $form = $this->createForm(DegreeFormType::class, $degree);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
